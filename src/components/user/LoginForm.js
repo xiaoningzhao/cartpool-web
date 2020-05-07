@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
 import 'antd/dist/antd.css';
 import '../../styles/home.css';
-import {Form, Input, Button, Checkbox, message, Alert} from 'antd';
+import {Form, Input, Button, Checkbox, message, Alert, Divider} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import axios from "axios";
 import {setLogin, setProfile, setToken} from "../../actions/user";
 import {useStore} from "react-redux";
 import {useHistory} from "react-router";
 import {BASE_URL} from "../../config/constants";
+import FirebaseLogin from "./FirebaseLogin";
 
 const LoginForm = () => {
 
@@ -69,55 +70,59 @@ const LoginForm = () => {
     }
 
     return (
-        <Form
-            name="normal_login"
-            className="login-form"
-            initialValues={{
-                remember: true,
-            }}
-            onFinish={login}
-        >
-            {errorMessage.length > 0 && <Alert message={errorMessage} type="error" showIcon /> }
+        <div>
+            <Form
+                name="normal_login"
+                className="login-form"
+                initialValues={{
+                    remember: true,
+                }}
+                onFinish={login}
+            >
+                {errorMessage.length > 0 && <Alert message={errorMessage} type="error" showIcon /> }
 
-            <Form.Item
-                name="username"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input your Username!',
-                    },
-                ]}
-            >
-                <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-            </Form.Item>
-            <Form.Item
-                name="password"
-                rules={[
-                    {
-                        required: true,
-                        message: 'Please input your Password!',
-                    },
-                ]}
-            >
-                <Input
-                    prefix={<LockOutlined className="site-form-item-icon" />}
-                    type="password"
-                    placeholder="Password"
-                />
-            </Form.Item>
-            <Form.Item>
-                <Form.Item name="remember" valuePropName="checked" noStyle>
-                    <Checkbox>Remember me</Checkbox>
+                <Form.Item
+                    name="username"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please input your Username!',
+                        },
+                    ]}
+                >
+                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please input your Password!',
+                        },
+                    ]}
+                >
+                    <Input
+                        prefix={<LockOutlined className="site-form-item-icon" />}
+                        type="password"
+                        placeholder="Password"
+                    />
+                </Form.Item>
+                <Form.Item>
+                    <Form.Item name="remember" valuePropName="checked" noStyle>
+                        <Checkbox>Remember me</Checkbox>
+                    </Form.Item>
+
                 </Form.Item>
 
-            </Form.Item>
-
-            <Form.Item>
-                <Button type="primary" htmlType="submit" className="login-form-button">
-                    Log in
-                </Button>
-            </Form.Item>
-        </Form>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit" className="login-form-button">
+                        Log in
+                    </Button>
+                </Form.Item>
+            </Form>
+            <Divider orientation="center">Other Login</Divider>
+            <FirebaseLogin/>
+        </div>
     );
 };
 

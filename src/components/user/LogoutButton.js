@@ -5,6 +5,7 @@ import {logout} from "../../actions/user";
 import 'antd/dist/antd.css'
 import {clearShoppingCart} from "../../actions/shoppingCart";
 import {useHistory} from "react-router";
+import firebase from "firebase";
 
 const LogoutButton = () => {
 
@@ -12,6 +13,7 @@ const LogoutButton = () => {
     const history = useHistory();
 
     const onClick = () => {
+        firebase.auth().signOut()
         store.dispatch(logout());
         store.dispatch(clearShoppingCart());
         message.success('Logout Successful!');
