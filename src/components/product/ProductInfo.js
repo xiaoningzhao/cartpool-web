@@ -49,6 +49,7 @@ const ProductInfo = ({productInfo}) => {
                 <img
                     alt="pic"
                     src={productInfo.imageUrl}
+                    height={200}
                 />
             }
             actions={

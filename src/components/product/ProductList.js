@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import ProductInfo from "./ProductInfo";
-import {Col, message, Row} from "antd";
+import {Col, Row} from "antd";
 import axios from "axios";
 import {connect} from "react-redux";
 import {BASE_URL} from "../../config/constants";

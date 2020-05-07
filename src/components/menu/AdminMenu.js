@@ -11,7 +11,7 @@ const AdminMenu = () => {
                 <Link to="/store">Store</Link>
             </Menu.Item>
             <Menu.Item key="2" icon={<PieChartOutlined />}>
-                <Link to="/product">Product</Link>
+                <Link to="/productmanage">Product</Link>
             </Menu.Item>
         </Menu>
     );

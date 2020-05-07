@@ -13,12 +13,14 @@ import PoolOrder from "../pages/poolorder";
 import Delivery from "../pages/delivery";
 import ResultMessage from "../pages/resultmessage";
 import Verification from "../pages/verification";
+import ProductManage from "../pages/admin/productmanage";
 
 const Routing = () => {
 
     return (
         <Switch>
             <Route path="/store" component={Store} />
+            <Route path="/productmanage" component={ProductManage} />
             <Route path="/product" component={Product} />
             <Route path="/login" component={LoginForm} />
             <Route path="/register" component={Register}/>

@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import '../../styles/home.css';
 import {connect} from "react-redux";
 import LogoutButton from "./LogoutButton";
-import {Alert, Avatar, Badge, Card} from "antd";
+import {Alert, Avatar, Card} from "antd";
 import LoginButton from "./LoginButton";
 import UserOutlined from "@ant-design/icons/lib/icons/UserOutlined";
 

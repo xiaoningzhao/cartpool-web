@@ -1,6 +1,5 @@
 import React from "react";
 import CheckoutForm from "../components/order/CheckoutForm";
-import MyShoppingCart from "../components/order/MyShoppingCart";
 import {Button, Divider} from "antd";
 import {Link} from "react-router-dom";
 

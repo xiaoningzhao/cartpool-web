@@ -1,5 +1,4 @@
 import React from "react";
-import ProductList from "../components/product/ProductList";
 import {useHistory, useParams} from "react-router";
 import axios from "axios";
 import {BASE_URL} from "../config/constants";
@@ -17,7 +16,7 @@ const Verification = () => {
             console.log(response);
             const message = {status: 'success', title: 'Verify Successful', subTitle: 'Welcome', content: 'Your email has been verified, please login to enjoy your shopping.'};
             history.push('/result', message);
-        }.bind(this))
+        })
         .catch(function (error) {
             console.log(error);
             const message = {status: 'error', title: 'Verify Failed', subTitle: 'Failed', content: 'Verify email failed, please try again'};
