@@ -9,14 +9,30 @@ import * as serviceWorker from './serviceWorker';
 import {createStore} from "redux";
 import {Provider} from 'react-redux';
 import reducer from "./reducers/reducer";
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 
-const store = createStore(reducer, window.devToolsExtension ? window.devToolsExtension() : f => f)
+const persistConfig = {
+    key: 'root',
+    storage,
+    stateReconciler: autoMergeLevel2
+}
+
+const myPersistReducer = persistReducer(persistConfig,reducer);
+
+const store = createStore(myPersistReducer, window.devToolsExtension ? window.devToolsExtension() : f => f)
+
+let persistor = persistStore(store)
 
 ReactDOM.render(
     <Provider store={store}>
-      <Router>
-          <Home />
-      </Router>
+        <PersistGate loading={null} persistor={persistor}>
+          <Router>
+              <Home />
+          </Router>
+        </PersistGate>
     </Provider>,
   document.getElementById('root')
 );
