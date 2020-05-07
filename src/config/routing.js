@@ -1,6 +1,6 @@
 import React from "react";
 import {Redirect, Route, Switch} from "react-router-dom";
-import Store from "../pages/store";
+import Store from "../pages/admin/store";
 import Product from "../pages/product";
 import LoginForm from "../components/user/LoginForm";
 import Register from "../pages/register";

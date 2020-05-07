@@ -90,7 +90,7 @@ const DeliveryList = () => {
         {
             title: 'Amount',
             dataIndex: 'amount',
-            key: 'category',
+            key: 'amount',
         },
         {
             title: 'Status',
