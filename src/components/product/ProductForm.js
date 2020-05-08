@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
-import {Form, Input, Button, Alert, message, InputNumber} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Form, Input, Button, Alert, message, InputNumber, Select} from 'antd';
 import axios from "axios";
 import {BASE_URL} from "../../config/constants";
 import {useStore} from "react-redux";
+const { Option } = Select;
 
 const { TextArea } = Input;
 
@@ -37,19 +38,49 @@ const tailFormItemLayout = {
     },
 };
 
+
+
+
 const ProductForm = ({type, productData}) => {
     const [form] = Form.useForm();
 
     const store = useStore();
 
+    const [shopStoreList, SetShopStoreList] = useState([]);
+
     const [errorMessage, setErrorMessage] = useState('');
 
+    const [pickStore, setPickStore] = useState('');
+
+    useEffect(() => {loadStore();}, []);
+
     console.log(productData);
+
+    const loadStore = () => {
+        axios({
+            method: 'get',
+            url: BASE_URL+'/api/store',
+            headers: {
+                'Authorization': store.getState().user.token
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                SetShopStoreList(response.data);
+            })
+            .catch(function (error) {
+                console.log(error.response.data);
+            });
+    }
+
+    const selectStore = (value, key) => {
+        setPickStore(key);
+    }
+
 
     const submit = (values) =>{
 
         setErrorMessage('');
-        console.log(values);
 
         let url, method = '';
         if(type === 'edit'){
@@ -79,11 +110,50 @@ const ProductForm = ({type, productData}) => {
         })
             .then(function (response) {
                 console.log(response);
+                if(pickStore!==''){
+                    assignStore(response.data.productId, pickStore);
+                }
+
                 message.success('Successful!');
             })
             .catch(function (error) {
                 console.log(error);
                 setErrorMessage(error.response.data.message);
+            });
+    }
+
+    const assignStore = (productId, storeId) =>{
+
+        console.log(storeId);
+
+        let url = BASE_URL+'/api/product/addToStore';
+
+        axios({
+            method: 'post',
+            url: url,
+            data: {
+                productId: productId,
+                storeId: storeId.key
+            },
+            transformRequest: [function (data) {
+                let ret = ''
+                for (let it in data) {
+                    ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                }
+                return ret
+            }],
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': store.getState().user.token
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                // message.success('Successful!');
+            })
+            .catch(function (error) {
+                console.log(error);
+                // setErrorMessage(error.response.data.message);
             });
     }
 
@@ -174,6 +244,18 @@ const ProductForm = ({type, productData}) => {
                 initialValue = {productData.description}
             >
                 <TextArea/>
+            </Form.Item>
+
+            <Form.Item name="store" label="Select a store" rules={[{ required: true }]}>
+                <Select
+                    placeholder="Select a store"
+                    onSelect={selectStore}
+                    allowClear
+                >
+                    {shopStoreList.map(s => (
+                        <Option value={s.id} key={s.id}>{s.name}</Option>
+                    ))}
+                </Select>
             </Form.Item>
 
             <Form.Item {...tailFormItemLayout}>
