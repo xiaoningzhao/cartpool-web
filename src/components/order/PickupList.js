@@ -70,9 +70,9 @@ const PickupList = () => {
             key: 'id',
         },
         {
-            title: 'Amount',
+            title: 'Amount $',
             dataIndex: 'amount',
-            key: 'category',
+            key: 'amount',
         },
         {
             title: 'Status',
@@ -85,7 +85,7 @@ const PickupList = () => {
             key: 'pickupMethod',
         },
         {
-            title: 'creationTime',
+            title: 'CreationTime',
             dataIndex: 'creationTime',
             key: 'creationTime',
             // render: val => <span>{moment(val).format('YYYY-MM-DD HH:mm:ss')}</span>

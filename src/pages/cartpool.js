@@ -10,7 +10,15 @@ const CartPool = ({userInfo}) => {
         if(userInfo.pool==='' || userInfo.pool === null){
             return <div><CartPoolCreationButton/><CartPoolList/></div>;
         }else{
-            return <div><CartPoolDetailForm /></div>;
+            if(userInfo.poolStatus==='ACTIVE'){
+                return <div><CartPoolDetailForm /></div>;
+            }else if(userInfo.poolStatus==='REF'){
+                return <div><p>Your joining pool request has been sent to reference member, please wait for support.</p></div>;
+            }else if(userInfo.poolStatus==='LEADER'){
+                return <div><p>Your joining pool request has been sent to leader, please wait for approval.</p></div>;
+            }else{
+                return <div><CartPoolCreationButton/><CartPoolList/></div>;
+            }
         }
     }else{
         return <div><p>Please Login to View Cart Pool</p></div>;

@@ -13,7 +13,7 @@ const ProductInfo = ({productInfo}) => {
 
     const addShoppingCart = () => {
         if(store.getState().user.isLogin){
-            if(store.getState().user.pool !== '' && store.getState().user.pool !== null) {
+            if(store.getState().user.pool !== '' && store.getState().user.pool !== null && store.getState().user.poolStatus ==='ACTIVE') {
                 if (store.getState().user.shopStore !== '' && store.getState().user.shopStore !== null) {
                     productInfo.quantity = 1;
                     productInfo.store = store.getState().user.shopStore;

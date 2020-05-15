@@ -17,6 +17,7 @@ const initialState = {
     contribution: 0,
     role: '',
     pool: '',
+    poolStatus: '',
     shopStore: '',
     storeName: '',
     token: '',
@@ -42,11 +43,13 @@ export function user(state=initialState,action) {
                 screenName: action.profile.screenName,
                 contribution: action.profile.contribution,
                 role: action.profile.role,
-                pool: action.profile.poolId
+                pool: action.profile.poolId,
+                poolStatus: action.profile.poolStatus
             });
         case SET_CARTPOOL:
             return Object.assign({}, state, {
-                pool: action.pool
+                pool: action.pool,
+                poolStatus: action.poolStatus
             });
         case SET_SHOPSTORE:
             return Object.assign({}, state, {

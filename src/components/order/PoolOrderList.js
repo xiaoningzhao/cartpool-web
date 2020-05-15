@@ -76,9 +76,9 @@ const PoolOrderList = () => {
             sorter: (a, b) => a.id - b.id,
         },
         {
-            title: 'Amount',
+            title: 'Amount $',
             dataIndex: 'amount',
-            key: 'category',
+            key: 'amount',
         },
         {
             title: 'Status',

@@ -33,10 +33,11 @@ export function logout(){
     }
 }
 
-export function setCartPool(pool){
+export function setCartPool(pool, poolStatus){
     return{
         type: SET_CARTPOOL,
-        pool: pool
+        pool: pool,
+        poolStatus: poolStatus
     }
 }
 

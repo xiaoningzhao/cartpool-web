@@ -75,7 +75,7 @@ const CartPoolCreationForm = () => {
         })
             .then(function (response) {
                 console.log(response);
-                store.dispatch(setCartPool(response.data.id))
+                store.dispatch(setCartPool(response.data.id, 'ACTIVE'))
                 message.success('Create Cart Pool Successful!');
             })
             .catch(function (error) {

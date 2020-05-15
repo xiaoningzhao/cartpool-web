@@ -18,6 +18,7 @@ const Profile = ({userInfo}) => {
                 <p>Email: {userInfo.username}</p>
                 <p>Role: {userInfo.role}</p>
                 <p>Cart Pool: {userInfo.pool}</p>
+                <p>Pool Status: {userInfo.poolStatus}</p>
                 <p>Contribution Score:
                     {userInfo.contribution>-4 && <Alert message={userInfo.contribution} type="success" showIcon />}
                     {userInfo.contribution<=-6 && <Alert message={userInfo.contribution} type="error" showIcon />}

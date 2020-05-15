@@ -50,7 +50,7 @@ const ProductForm = ({type, productData}) => {
 
     const [errorMessage, setErrorMessage] = useState('');
 
-    const [pickStore, setPickStore] = useState('');
+    const [pickStore, setPickStore] = useState([]);
 
     useEffect(() => {loadStore();}, []);
 
@@ -73,8 +73,8 @@ const ProductForm = ({type, productData}) => {
             });
     }
 
-    const selectStore = (value, key) => {
-        setPickStore(key);
+    const selectStore = (value) => {
+        setPickStore(value);
     }
 
 
@@ -110,11 +110,11 @@ const ProductForm = ({type, productData}) => {
         })
             .then(function (response) {
                 console.log(response);
-                if(pickStore!==''){
+                if(pickStore.length>0){
                     assignStore(response.data.productId, pickStore);
                 }
 
-                message.success('Successful!');
+                message.success('Success!');
             })
             .catch(function (error) {
                 console.log(error);
@@ -126,24 +126,13 @@ const ProductForm = ({type, productData}) => {
 
         console.log(storeId);
 
-        let url = BASE_URL+'/api/product/addToStore';
+        let url = BASE_URL+'/api/product/addToStores/'+productId;
 
         axios({
             method: 'post',
             url: url,
-            data: {
-                productId: productId,
-                storeId: storeId.key
-            },
-            transformRequest: [function (data) {
-                let ret = ''
-                for (let it in data) {
-                    ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-                }
-                return ret
-            }],
+            data: pickStore,
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': store.getState().user.token
             }
         })
@@ -153,6 +142,7 @@ const ProductForm = ({type, productData}) => {
             })
             .catch(function (error) {
                 console.log(error);
+                message.error(error.response.data.message);
                 // setErrorMessage(error.response.data.message);
             });
     }
@@ -246,10 +236,12 @@ const ProductForm = ({type, productData}) => {
                 <TextArea/>
             </Form.Item>
 
-            <Form.Item name="store" label="Select a store" rules={[{ required: true }]}>
+            <Form.Item name="store" label="Select a store" >
                 <Select
+                    mode="multiple"
                     placeholder="Select a store"
-                    onSelect={selectStore}
+                    // onSelect={selectStore}
+                    onChange={selectStore}
                     allowClear
                 >
                     {shopStoreList.map(s => (

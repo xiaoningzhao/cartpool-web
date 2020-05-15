@@ -1,20 +1,26 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import '../../styles/home.css';
-import {Table, Input, Button, Space, message} from 'antd';
+import {Table, Input, Button, Space, message, Modal, Form, Alert, Checkbox, Divider, Tooltip} from 'antd';
 import Highlighter from 'react-highlight-words';
-import { SearchOutlined } from '@ant-design/icons';
+import {LockOutlined, QuestionCircleOutlined, SearchOutlined, UserOutlined} from '@ant-design/icons';
 import axios from "axios";
 import {connect} from "react-redux";
 import {setCartPool} from "../../actions/user";
 import {BASE_URL} from "../../config/constants";
+import LoginForm from "../user/LoginForm";
+import FirebaseLogin from "../user/FirebaseLogin";
 
 class CartPoolList extends React.Component {
 
     state = {
         searchText: '',
         searchedColumn: '',
-        cartPools: null
+        cartPools: null,
+        refMember:'',
+        poolLeader:'',
+        poolId: 0,
+        visible: false,
     };
 
     componentDidMount() {
@@ -101,27 +107,56 @@ class CartPoolList extends React.Component {
         this.setState({ searchText: '' });
     };
 
+    setRef = (values) => {
+        console.log(values.leader);
+        if(values.leader===true){
+            axios({
+                method: 'get',
+                url: BASE_URL+'/api/user/joinpoolleader?userId='+this.props.user.id+'&poolId='+ this.state.poolId,
+                headers: {
+                    'Authorization': this.props.user.token
+                }
+            })
+                .then(function (response) {
+                    console.log(response);
+                    message.success('Sent Successful!');
+                    const {setCartPool} = this.props
+                    setCartPool(response.data.poolId, response.data.poolStatus);
+                }.bind(this))
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }else{
+            if(values.refMember === '' || values.refMember === undefined || values.refMember === null){
+                message.error('Please fill a reference member name.');
+                return;
+            }else{
+                axios({
+                    method: 'get',
+                    url: BASE_URL+'/api/user/joinpoolref?userId='+this.props.user.id+'&poolId='+ this.state.poolId + '&refScreenName=' + values.refMember,
+                    headers: {
+                        'Authorization': this.props.user.token
+                    }
+                })
+                    .then(function (response) {
+                        console.log(response);
+                        message.success('Sent Successful!');
+                        const {setCartPool} = this.props
+                        setCartPool(response.data.poolId, response.data.poolStatus);
+                    }.bind(this))
+                    .catch(function (error) {
+                        console.log(error.response.data.message);
+                        message.error(error.response.data.message);
+                    });
+            }
+        }
+    }
+
     join = record => {
         console.log(record.id);
 
-        axios({
-            method: 'put',
-            url: BASE_URL+'/api/user/'+this.props.user.id+'/joinpool/'+ record.id,
-            headers: {
-                'Authorization': this.props.user.token
-            }
-        })
-            .then(function (response) {
-                console.log(response);
-                message.success('Load Successful!');
-                const {setCartPool} = this.props
-                setCartPool(response.data.poolId);
-            }.bind(this))
-            .catch(function (error) {
-                console.log(error);
-            });
-
-
+        this.setState({ poolId: record.id })
+        this.setState({ visible: true })
 
     };
 
@@ -170,7 +205,54 @@ class CartPoolList extends React.Component {
                 ),
             },
         ];
-        return <Table columns={columns} dataSource={this.state.cartPools} rowKey="id"/>;
+        return (
+            <div>
+                <Table columns={columns} dataSource={this.state.cartPools} rowKey="id"/>
+                <Modal
+                    title="Login"
+                    visible={this.state.visible}
+                    footer={null}
+                    destroyOnClose={true}
+                    onCancel={() => this.setState({ visible: false })}
+                >
+                    <div>
+                        <Form
+                            name="form"
+                            className="form"
+                            initialValues={{
+                                remember: true,
+                            }}
+                            onFinish={(values) => this.setRef(values)}
+                        >
+                            <Form.Item
+                                name="refMember"
+                                label="Reference Member Name"
+                                rules={[
+                                    {
+                                        message: 'Please input your reference member name!',
+                                        whitespace: true,
+                                    },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item>
+                                <Form.Item name="leader" valuePropName="checked" noStyle>
+                                    <Checkbox>Send to pool leader</Checkbox>
+                                </Form.Item>
+
+                            </Form.Item>
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit" className="login-form-button">
+                                    OK
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </div>
+                </Modal>
+            </div>
+
+            );
     }
 }
 
@@ -184,7 +266,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
     return {
         // dispatching plain actions
-        setCartPool: (poolId) => dispatch(setCartPool(poolId)),
+        setCartPool: (poolId, poolStatus) => dispatch(setCartPool(poolId, poolStatus)),
     }
 }
 

@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Button, message, Modal, Table} from "antd";
+import {Button, Input, message, Modal, Space, Table} from "antd";
 import axios from "axios";
 import {useStore} from "react-redux"
 import {BASE_URL} from "../../config/constants";
 import StoreForm from "./StoreForm";
+import {SearchOutlined} from "@ant-design/icons";
+import Highlighter from "react-highlight-words";
 
 const StoreList = () => {
 
@@ -45,6 +47,100 @@ const StoreList = () => {
         setCreateVisible(true);
     }
 
+    const deleteStore = (record) => {
+        const url = BASE_URL+'/api/store/'+record.id;
+        axios({
+            method: 'delete',
+            url: url,
+            headers: {
+                'Authorization': store.getState().user.token
+            }
+        })
+            .then(function (response) {
+                console.log(response);
+                getStores();
+                message.success('Delete Successful!');
+                // return response.data;
+            })
+            .catch(function (error) {
+                console.log(error.response.data);
+                message.error(error.response.data.message);
+            });
+    }
+
+    const [searchText, setSearchText] = useState('');
+    const [searchedColumn, setSearchedColumn] = useState('');
+    const [searchInput, setSearchInput] = useState();
+
+    const handleSearch = (selectedKeys, confirm, dataIndex) => {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+        // this.setState({
+        //     searchText: selectedKeys[0],
+        //     searchedColumn: dataIndex,
+        // });
+    };
+
+    const handleReset = clearFilters => {
+        clearFilters();
+        setSearchText('');
+        // this.setState({ searchText: '' });
+    };
+
+    const getColumnSearchProps = (dataIndex) => ({
+        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+            <div style={{ padding: 8 }}>
+                <Input
+                    ref={node => {
+                        setSearchInput(node);
+                        // this.searchInput = node;
+                    }}
+                    placeholder={`Search ${dataIndex}`}
+                    value={selectedKeys[0]}
+                    onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    style={{ width: 188, marginBottom: 8, display: 'block' }}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        icon={<SearchOutlined />}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Search
+                    </Button>
+                    <Button onClick={() => handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+                        Reset
+                    </Button>
+                </Space>
+            </div>
+        ),
+        filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+        onFilter: (value, record) =>{
+            if(record[dataIndex] !== null) {
+                return record[dataIndex].toString().toLowerCase().includes(value.toLowerCase());
+            }},
+        // onFilterDropdownVisibleChange: visible => {
+        //     if (visible) {
+        //         setTimeout(() => searchInput.select());
+        //     }
+        // },
+        render: (text) =>
+            searchedColumn === dataIndex ? (
+                <Highlighter
+                    highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+                    searchWords={[searchText]}
+                    autoEscape
+                    textToHighlight={text}
+                />
+            ) : (
+                text
+            ),
+    });
+
     const columns = [
         {
             title: 'Store ID',
@@ -55,32 +151,40 @@ const StoreList = () => {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
+            ...getColumnSearchProps('name'),
         },
         {
             title: 'Street',
             dataIndex: 'street',
             key: 'street',
+            ...getColumnSearchProps('street'),
         },
         {
-            title: 'city',
+            title: 'City',
             dataIndex: 'city',
             key: 'city',
+            ...getColumnSearchProps('city'),
         },
         {
             title: 'State',
             dataIndex: 'state',
             key: 'state',
+            ...getColumnSearchProps('state'),
         },
         {
             title: 'ZIP',
             dataIndex: 'zip',
             key: 'zip',
+            ...getColumnSearchProps('zip'),
         },
         {
             title: 'Action',
             key: 'action',
             render : (text, record) => (
-                <Button type='link' onClick={()=>edit(record)}>Edit</Button>
+                <div>
+                    <Button type='link' onClick={()=>edit(record)}>Edit</Button> |
+                    <Button type='link' onClick={()=>deleteStore(record)}>Delete</Button>
+                </div>
             ),
         },
     ];

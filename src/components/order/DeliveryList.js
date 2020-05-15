@@ -88,7 +88,7 @@ const DeliveryList = () => {
             key: 'id',
         },
         {
-            title: 'Amount',
+            title: 'Amount $',
             dataIndex: 'amount',
             key: 'amount',
         },
@@ -108,7 +108,7 @@ const DeliveryList = () => {
             key: 'street',
         },
         {
-            title: 'city',
+            title: 'City',
             dataIndex: 'city',
             key: 'city',
         },

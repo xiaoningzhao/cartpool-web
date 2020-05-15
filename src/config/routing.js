@@ -14,6 +14,8 @@ import Delivery from "../pages/delivery";
 import ResultMessage from "../pages/resultmessage";
 import Verification from "../pages/verification";
 import ProductManage from "../pages/admin/productmanage";
+import ConfirmJoinRef from "../pages/ConfirmJoinRef";
+import ConfirmJoinLeader from "../pages/ConfirmJoinLeader";
 
 const Routing = () => {
 
@@ -33,6 +35,8 @@ const Routing = () => {
             <Route path="/delivery" component={Delivery} />
             <Route path="/result" component={ResultMessage} />
             <Route path="/verification/:token" component={Verification} />
+            <Route path="/verifyjoinpoolref/:userId/:poolId/:join" component={ConfirmJoinRef} />
+            <Route path="/verifyjoinpoolleader/:userId/:poolId/:join" component={ConfirmJoinLeader} />
             <Redirect to="/product"/>
         </Switch>
     );

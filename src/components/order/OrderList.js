@@ -39,9 +39,9 @@ const OrderList = ({OrderInfo}) => {
             key: 'id',
         },
         {
-            title: 'Amount',
+            title: 'Amount $',
             dataIndex: 'amount',
-            key: 'category',
+            key: 'amount',
         },
         {
             title: 'Status',

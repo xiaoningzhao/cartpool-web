@@ -101,6 +101,7 @@ const CheckoutForm = () => {
             })
             .catch(function (error) {
                 console.log(error);
+                message.error(error.response.data.message);
                 //setErrorMessage(error.response.data.message);
             });
     }
@@ -123,7 +124,7 @@ const CheckoutForm = () => {
         <Form {...formItemLayout} form={form} name="checkout" onFinish={onFinish} scrollToFirstError >
             <Divider orientation="left">Order Summary</Divider>
             <MyShoppingCart />
-            <Divider orientation="left">Pickup</Divider>
+            <Divider orientation="left">How to Pickup</Divider>
             <Form.Item name="pickupMethod" label="Pickup Method" rules={[{ required: true }]}>
                 <Select
                     placeholder="Select pickup method"
@@ -135,7 +136,7 @@ const CheckoutForm = () => {
                 </Select>
             </Form.Item>
 
-            <Divider orientation="left">Address</Divider>
+            <Divider orientation="left">Shipping Address</Divider>
             <Form.Item
                 name='street'
                 label='Street'
