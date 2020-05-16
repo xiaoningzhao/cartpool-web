@@ -34,9 +34,9 @@ const Routing = () => {
             <Route path="/poolorder" component={PoolOrder} />
             <Route path="/delivery" component={Delivery} />
             <Route path="/result" component={ResultMessage} />
-            <Route path="/verification/:token" component={Verification} />
-            <Route path="/verifyjoinpoolref/:userId/:poolId/:join" component={ConfirmJoinRef} />
-            <Route path="/verifyjoinpoolleader/:userId/:poolId/:join" component={ConfirmJoinLeader} />
+            <Route path="/verification" component={Verification} />
+            <Route path="/verifyjoinpoolref" component={ConfirmJoinRef} />
+            <Route path="/verifyjoinpoolleader" component={ConfirmJoinLeader} />
             <Redirect to="/product"/>
         </Switch>
     );

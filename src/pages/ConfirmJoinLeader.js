@@ -1,12 +1,20 @@
 import React from "react";
-import {useHistory, useParams} from "react-router";
+import {useHistory, useLocation} from "react-router";
 import axios from "axios";
 import {BASE_URL} from "../config/constants";
 
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
+
 const ConfirmJoinLeader = () => {
 
-    let { userId, poolId, join } = useParams();
     let history = useHistory();
+    let query = useQuery();
+
+    let userId = query.get('userId');
+    let poolId = query.get('poolId');
+    let join = query.get('join');
 
     axios({
         method: 'get',

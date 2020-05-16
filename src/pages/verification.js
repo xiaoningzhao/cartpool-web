@@ -1,12 +1,20 @@
 import React from "react";
-import {useHistory, useParams} from "react-router";
+import {useHistory, useLocation} from "react-router";
 import axios from "axios";
 import {BASE_URL} from "../config/constants";
 
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
+
 const Verification = () => {
 
-    let { token } = useParams();
     let history = useHistory();
+    let query = useQuery();
+
+    let token = query.get('token');
+
+    console.log(token);
 
     axios({
         method: 'get',
