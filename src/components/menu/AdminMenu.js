@@ -13,6 +13,9 @@ const AdminMenu = () => {
             <Menu.Item key="2" icon={<PieChartOutlined />}>
                 <Link to="/productmanage">Product</Link>
             </Menu.Item>
+            <Menu.Item key="3" icon={<PieChartOutlined />}>
+                <Link to="/sendmessage">Message</Link>
+            </Menu.Item>
         </Menu>
     );
 }

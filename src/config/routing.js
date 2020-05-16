@@ -16,6 +16,7 @@ import Verification from "../pages/verification";
 import ProductManage from "../pages/admin/productmanage";
 import ConfirmJoinRef from "../pages/ConfirmJoinRef";
 import ConfirmJoinLeader from "../pages/ConfirmJoinLeader";
+import SendMessageForm from "../components/SendMessageForm";
 
 const Routing = () => {
 
@@ -37,6 +38,7 @@ const Routing = () => {
             <Route path="/verification" component={Verification} />
             <Route path="/verifyjoinpoolref" component={ConfirmJoinRef} />
             <Route path="/verifyjoinpoolleader" component={ConfirmJoinLeader} />
+            <Route path="/sendmessage" component={SendMessageForm} />
             <Redirect to="/product"/>
         </Switch>
     );

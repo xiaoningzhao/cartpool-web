@@ -16,14 +16,17 @@ const UserMenu = () => {
             <Menu.Item key="3" icon={<PieChartOutlined />}>
                 <Link to="/shoppingcart">ShoppingCart</Link>
             </Menu.Item>
-            <Menu.Item key="5" icon={<PieChartOutlined />}>
+            <Menu.Item key="4" icon={<PieChartOutlined />}>
                 <Link to="/order">Order</Link>
             </Menu.Item>
-            <Menu.Item key="6" icon={<PieChartOutlined />}>
+            <Menu.Item key="5" icon={<PieChartOutlined />}>
                 <Link to="/pickup">Pick Up</Link>
             </Menu.Item>
-            <Menu.Item key="7" icon={<PieChartOutlined />}>
+            <Menu.Item key="6" icon={<PieChartOutlined />}>
                 <Link to="/delivery">Delivery</Link>
+            </Menu.Item>
+            <Menu.Item key="7" icon={<PieChartOutlined />}>
+                <Link to="/sendmessage">Message</Link>
             </Menu.Item>
         </Menu>
     );

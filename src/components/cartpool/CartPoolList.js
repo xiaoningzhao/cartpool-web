@@ -1,15 +1,13 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import '../../styles/home.css';
-import {Table, Input, Button, Space, message, Modal, Form, Alert, Checkbox, Divider, Tooltip} from 'antd';
+import {Table, Input, Button, Space, message, Modal, Form, Checkbox} from 'antd';
 import Highlighter from 'react-highlight-words';
-import {LockOutlined, QuestionCircleOutlined, SearchOutlined, UserOutlined} from '@ant-design/icons';
+import {SearchOutlined} from '@ant-design/icons';
 import axios from "axios";
 import {connect} from "react-redux";
 import {setCartPool} from "../../actions/user";
 import {BASE_URL} from "../../config/constants";
-import LoginForm from "../user/LoginForm";
-import FirebaseLogin from "../user/FirebaseLogin";
 
 class CartPoolList extends React.Component {
 
