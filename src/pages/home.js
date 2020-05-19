@@ -33,7 +33,7 @@ const Home = ({userInfo}) => {
     return(
         <Layout style={{ minHeight: '100vh' }}>
             <Sider collapsible collapsed={collapsed} onCollapse={()=>{setCollapsed(!collapsed)}}>
-                <div className="logo" >CartPool</div>
+                <div className="logo" style={{'text-align': 'center'}}><p style={{color: 'white'}}>CartPool</p></div>
                 {menu}
             </Sider>
             <Layout className="site-layout">
@@ -54,7 +54,7 @@ const Home = ({userInfo}) => {
                         <Routing />
                     </div>
                 </Content>
-                <Footer style={{ textAlign: 'center' }}>Xiaoning Zhao</Footer>
+                <Footer style={{ textAlign: 'center' }}>CMPE 275 CartPool Service</Footer>
             </Layout>
         </Layout>
     );

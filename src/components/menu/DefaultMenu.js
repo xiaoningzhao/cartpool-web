@@ -1,13 +1,13 @@
 import React from "react";
 import {Menu} from "antd";
-import {PieChartOutlined} from "@ant-design/icons";
+import {AppstoreOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
 
 const DefaultMenu = () => {
 
     return (
         <Menu theme="dark" mode="inline" >
-            <Menu.Item key="1" icon={<PieChartOutlined />}>
+            <Menu.Item key="1" icon={<AppstoreOutlined />}>
                 <Link to="/product">Product</Link>
             </Menu.Item>
             {/*<Menu.Item key="2" icon={<PieChartOutlined />}>*/}

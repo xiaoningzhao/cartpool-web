@@ -72,7 +72,7 @@ const RegistrationForm = () => {
             .then(function (response) {
                 console.log(response);
                 let link = 'http://localhost:3000/verification/' + response.data.token;
-                const message = {status: 'success', title: 'Register Successful', subTitle: 'Please verify your email', content: link };
+                const message = {status: 'success', title: 'Register Successful', subTitle: 'Please verify your email', content: 'Please check your mailbox to verify your email' };
                 history.push('/result', message);
             })
             .catch(function (error) {

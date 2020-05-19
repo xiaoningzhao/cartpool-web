@@ -50,7 +50,7 @@ const SendMessageForm = ()=> {
         >
             <Form.Item
                 name="recipient"
-                label="Recipient Name"
+                label="Recipient Screen Name"
                 rules={[
                     {
                         required: true,
